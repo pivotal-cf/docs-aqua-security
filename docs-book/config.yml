@@ -16,8 +16,8 @@ public_host: hello
 sections:
   - repository:
       name: docs-content
-    directory: aqua-security
-    subnav_template: aqua-security_subnav.erb       
+    directory: aquasec
+    subnav_template: aquasec_subnav.erb
 
 template_variables:                             # optional
 

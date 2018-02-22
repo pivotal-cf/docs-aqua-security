@@ -1,28 +1,103 @@
 ---
-title: Installing and Configuring YOUR-PRODUCT-NAME
+title: Installing and Configuring Aqua Security for PCF (Beta)
 owner: Partners
 ---
 
-This topic describes how to install and configure YOUR-PRODUCT-NAME.
+This topic describes how to install and configure Aqua Security.
 
-##<a id='install'></a> Install and Configure YOUR-PRODUCT-NAME
+## <a id="upload-tile"></a>Upload Tile
 
 1. Download the product file from Pivotal Network.
 
-1. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file. 
+1. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file.
 
-1. Under the **Import a Product** button, click **+** next to the version number of YOUR-PRODUCT-NAME. 
+1. Under the **Import a Product** button, click **+** next to the version number of Aqua Security.
 This adds the tile to your staging area.
 
-1. Click the newly added **YOUR-PRODUCT-NAME** tile.
+1. Click the newly added **Aqua Security for PCF** tile.
 
-1. **This portion of the procedure should tell the users how to configure the newly added tile by
-walking them through the sections. Which fields should they fill out? What are the different
-checkboxes? Include relevant screenshots here.** 
+## <a id="configuration"></a>Configuration
+
+There are several panels of configuration for Aqua Security that you need to configure.
+
+### <a id="configuration-azs-networks"></a>Assign AZs and Networks
+
+If you have configured more than one **network** at your **Ops Manager Director** you will be required to select which **network** must be used when installing this tile:
+
+![installation-azs-networks](images/azs-networks.png)
 
 1. Click **Save**.
 
-1. Return to the Ops Manager Installation Dashboard and click **Apply changes** to install YOUR-PRODUCT-NAME tile.
+### <a id="configuration-license"></a>License
 
-**If needed, include additional configuration information below. For example, maybe there are
-configuration options not required for installation but which could be useful for certain users.**
+Aqua Security requires a Enterprise or Demo license which can be obtained [here](https://www.aquasec.com/aqua-signup/?source=pcf). The key should be entered in form field:
+
+![installation-license](images/license.png)
+
+1. Click **Save**.
+
+### <a id="configuration-database"></a>Databases
+
+The Aqua Security tile requires a database to store configuration, scan data, etc.
+
+You can configure Aqua Security to use the provided internal PostgreSQL database, or you can configure an external database provider for the databases (PostgreSQL 9.5 and higher is required)
+
+#### <a id="configuration-database-internal"></a>Internal Database Configuration
+
+  **WARNING**: The internal PostgreSQL database provided with Aqua Security is a single PostgreSQL instance by default. To enable HA options, please see [configuration-system-ha].
+
+If you want to use internal databases for your deployment, perform the following steps:
+
+1. In **Aqua Security > Settings**, select **Databases**.
+
+2. Select **Internal Database (Highly-Availibility not guaranteed)**.
+
+    ![installation-database-internal](images/database-internal.png)
+
+3. Click **Save**.
+
+#### <a id="configuration-database-postgresql"></a>External PostgreSQL Database
+
+  **NOTE**: The exact procedure to create databases depends upon the database provider you select for your deployment.
+
+  **WARNING**: Protect whichever database you use in your deployment with a password.
+
+Installations that require the use of external PostgreSQL databases for your deployment, perform the following steps:
+
+1. In **Aqua Security > Settings**, select **Databases**.
+
+2. Select **External Postgres 9.5.x+ Database**.
+
+    ![installation-shield-database-postgresql](images/external-database-postgresql.png)
+
+3. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | **Hostname DNS Name** | Specify the hostname of the database server |
+    | **TCP Port** | Specify the port of the database server |
+    | **Username** | Specify a unique username that can access this specific database on the database server |
+    | **Password** | Specify a password for the provided username |
+    | **Aqua Database Name** | Specify the database name on the database server |
+    | **Aqua Audit Database Name** | Specify the database name on the database server |
+
+    **NOTE**: Ensure that the Database has been created before clicking **Save**.
+
+4. Click **Save**.
+
+#### <a id="configuration-system-ha"></a>Aqua Console and DB HA
+The Aqua Security for PCF tile includes HA options for resource allocation the Aqua Console and DB componants. In order to tune the tile to utilize redunancies follow these steps:
+1. Navigate to the Resource Config tab
+2. Note the default options: 1 DB VM, 1 haproxy VM, and 1 Aquasec VM.
+3. To implement HA, simply scale up to 2x of each componant and the PCF platform will do the work for you. ***** More data needed along with screenshot
+
+
+### <a id="configuration-stemcell"></a>Stemcell
+
+If required to upload a particular stemcell series, you can find the latest available stemcell at [Pivotal Network](https://network.pivotal.io/products/stemcells).
+
+![installation-shield-stemcell](images/stemcell.png)
+
+## <a id="installation"></a>Installation
+
+1. Return to the Ops Manager Installation Dashboard and click **Apply changes** to install Aqua Security tile.
