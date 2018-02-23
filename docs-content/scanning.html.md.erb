@@ -4,53 +4,59 @@ owner: Partners
 ---
 
 ## <a id="image-scanning"></a> Image Vulnerability Scanning
+
 This section describes Aqua image vulnerability scanning.
 
-Aqua provides security analysis for PCF Applications at build-time, docker images at build time, and docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments. Aqua scans images for CVEs (Common Vulnerabilities and Exposures) listed on the NVD web site, a U.S. government repository of standards-based vulnerability management data as well as data from other industry sources which is curated by Aqua Security research staff.
-It is crucial to scan images and repositories for known vulnerabilities that could impact the system information assurance and security leading to security risks. Scanning an image for vulnerabilities reduces these incidents, and makes you more aware of the known and defined vulnerable images in the system.
+Aqua provides security analysis for PCF applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
+Aqua scans images for common vulnerabilities and exposures (CVEs) listed on the NVD website, a U.S. government repository of standards-based vulnerability management data as well as data from other industry sources which is curated by Aqua Security research staff.
+It is crucial to scan images and repositories for known vulnerabilities that could impact the system information assurance and security leading to security risks. Scanning an image for vulnerabilities reduces these incidents and makes you more aware of the known and defined vulnerable images in the system.
 
 Each image is scanned for vulnerabilities when both its OS packages and development language files are supported as listed in the Support matrix below.
 
 The image scanning process is initiated by:
 
-* Performing a `CF push`
+* Performing a `cf push`
 * A build pipeline tool like Consourse or Jenkins
 * Integrating the Aqua Management Console with either a public image registry like Docker Hub, or with a private image registry (for more information, see [Add a Registry]) and then adding images from a repository in that registry, see [Repository Management])
 * Scheduling a container scan after adding a Registry
 
-During this process, Aqua scans selected images from the registry and issues alerts when detecting vulnerabilities. You can then view the scan results by clicking on a repository to view vulnerability scan details of its images, as described in View Scan Results section below.
-
+During this process, Aqua scans selected images from the registry and issues alerts when detecting vulnerabilities. You can view the scan results by clicking on a repository to view vulnerability scan details of its images, as described in the View Scan Results section below.
 
 
 ## <a id="decorator"></a>Aqua Decorator Buildpack
-Build-time vulnerabilty scanning of PCF apps is achived via the aquasec-decorator buildpack which is installed by an errand upon tile installation.
+
+Build-time vulnerabilty scanning of PCF apps is achieved through the `aquasec-decorator` buildpack, which is installed by an errand upon tile installation.
 The decorator will be triggered if the `AQUA_SERVER_URL` envrionment variable is set for an app during staging.
-To function properly, the Aqua microscanner (invoked by the the decorator) will require  `AQUA_USERNAME` and `AQUA_PASSWORD` to be set.
+To function properly, the Aqua microscanner invoked by the the decorator will require you to set an `AQUA_USERNAME` and `AQUA_PASSWORD`.
 Aqua recommends implementing a `staging-environment-variable-group` variable so as to not impact developers current environment settings.
 
-### <a id="registry-naming"></a> Blobstore (Registry) naming conventions
-There are 2 ways of mapping a PCF application to an Aqua registry entry:
+### <a id="registry-naming"></a> Blobstore (Registry) Naming Conventions
+
+There are two ways of mapping a PCF application to an Aqua registry entry:
+
+* Specifying the registry name using the `AQUA_REGISTRY` environment variable.
+* Dynamically generating the registry name based on the PCF space name and first eight characters of the space guid.
+
+### <a id="image-naming"></a> Image Naming Convention
+
+PCF application scan results are registered within a registry using the app name and the first eight characters of the application version.
 
 
-1. Specifying the registry name using the `AQUA_REGISTRY` environment variable.
-2. Dynamically generating the registry name based on the PCF space name and first 8 characters of the space guid.
+## <a id="registry-creation"></a>Aqua Registry Creation
 
-### <a id="image-naming"></a> Image naming convention
-PCF application scan results will be registered within a registry using the app name and the first 8 characters of the application version.
-
-## <a id="registry-creation"></a>Aqua registry creation
-In order to to register the scan results an Aqua Registry listing needs to exist.
-The decorator is able to create these registries on demand, if the Aqua username used for scanning has admin permissions. If not scanning with an admin user the registry or registries need to be created beforehand either via REST API or manually.
+In order to to register the scan results, an Aqua Registry listing needs to exist.
+The decorator is able to create these registries on demand, if the Aqua username used for scanning has admin permissions. If you are not scanning with an admin user account, the registry or registries need to be created beforehand either through REST API or manually.
 
 | registry | static | dynamic pre-seeded | dynamic on the fly |
 |---|---|---|---|
 | admin user | X | X | X |
 | scanner user | X | X* | - |
 
-<p class='note'><strong>*</strong> Given that spaces and registries stay in sync, by rerunning seed steps everytime a space is created</p>
+<p class='note'><strong>Note:</strong> Ensure that spaces and registries stay in sync by rerunning seed steps every time a space is created.</p>
 
-### <a id="creating-static-registry"></a>Creating a registory via script
-With the following commands a registry of the Dummy type will be created via the Aqua API. Make sure to first install [jq](https://stedolan.github.io/jq/download/) and [curl](https://curl.haxx.se/docs/install.html).
+### <a id="creating-static-registry"></a>Creating a Registry with a Script
+
+You can create a registry of the Dummy type through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/) and [curl](https://curl.haxx.se/docs/install.html) installed.
 
 <pre class="terminal">
 $ export AQUA_USERNAME=pcf-scanner
@@ -62,11 +68,9 @@ $ curl -s -X POST -d "${data}" -H "Content-Type: application/json" -u "${AQUA_US
     ${AQUA_SERVER_URL%/}/api/v1/registries
 </pre>
 
+### <a id="seed-registry"></a>Pre-Seed Registries
 
-
-
-### <a id="seed-registry"></a>Pre-seed registries
-With the following commands a registry of the Dummy type will be created, for each PCF space, via the Aqua API. Make sure to first install [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html) and [cf cli](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). Also login as an PCF admin with `cf login`.
+You can create a registry of the Dummy type for each PCF space through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html), and [cf CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed. You must log in as a PCF admin with `cf login`.
 
 <pre class="terminal">
 $ export AQUA_USERNAME=administrator
@@ -77,19 +81,20 @@ $ for registry in $(cf curl /v2/spaces | jq -c '.resources[] | {name: "\(.entity
   done
 </pre>
 
-<p class='note'><strong>Note:</strong> If spaces in your environment change often, it is recommended to run the above snippet on a schedule via an automation tool like Concourse or Jenkins.</p>
+<p class='note'><strong>Note:</strong> If spaces in your environment change often, it is recommended to run the above snippet on a schedule through an automation tool like Concourse or Jenkins.</p>
 
-## <a id="staging-environment-variable-group"></a> Enable Aqua Decorator for all apps
-Security scanning can be enabled globally by using the staging environment variable group.
-All apps will use the same Aqua user and password. Environment variables set via a staging envrionment variable group, will be visable to all app developers (via `cf env {app_name}`).
+## <a id="staging-environment-variable-group"></a> Enable Aqua Decorator for All Apps
 
-With the following commands the `AQUA_USERNAME`, `AQUA_PASSWORD` and `AQUA_SERVER_URL` environment variables will be set for all PCF apps during staging. Make sure to first install [jq](https://stedolan.github.io/jq/download/) and [cf cli](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). Also login as an PCF admin with `cf login`.
+You can enable security scanning globally by using the staging environment variable group.
+All apps will use the same Aqua username and password. Environment variables set through a staging envrionment variable group will be visible to all app developers through `cf env {APP-NAME}`.
+
+Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for all PCF apps during staging by running the commands below. You must log in as a PCF admin with `cf login`.
 
 <pre class="terminal">
 $ cf set-staging-environment-variable-group '{"AQUA_REGISTRY":"PIE23","AQUA_USERNAME":"pcf-scanner","AQUA_PASSWORD":"abc12345","AQUA_SERVER_URL":"http://2.3.4.5:8080"}'
 </pre>
 
-Alternativly the same setting with a scripted example:
+You can also do this with a script:
 
 <pre class="terminal">
 $ export AQUA_USERNAME=pcf-scanner
@@ -102,14 +107,15 @@ $ cf set-staging-environment-variable-group \
     '.AQUA_USERNAME = $user | .AQUA_PASSWORD = $pass | .AQUA_SERVER_URL = $url')
 </pre>
 
- To verify the setting was assigned properly run:
+To verify that the setting was assigned properly, run the following command:
 
 <pre class="terminal">
 $ cf staging-environment-variable-group
 </pre>
 
-## <a id="app-env"></a> Enable Aqua Decorator for single app
-With the following commands the `AQUA_USERNAME`, `AQUA_PASSWORD` and `AQUA_SERVER_URL` environment variables will be set for a single PCF app, after which the app will be restaged. Make sure to first install [cf cli](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html). Also login as a developer with `cf login`.
+## <a id="app-env"></a> Enable Aqua Decorator for a Single App
+
+Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for a single PCF app by running the commands below. Afterward, the app will be restaged. You must log in as a developer with `cf login`.
 
 <pre class="terminal">
 $ cf set-env {APP_NAME} AQUA_USERNAME administrator
