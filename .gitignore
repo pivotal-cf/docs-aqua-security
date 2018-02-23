@@ -1,0 +1,5 @@
+docs-book/final_app/*
+docs-book/output/*
+*.log
+*.DS_Store
+.gitbb/*
