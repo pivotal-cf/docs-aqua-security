@@ -29,7 +29,7 @@ If you have configured more than one network in your Ops Manager Director, you w
 
 ### <a id="configuration-license"></a>License
 
-Aqua Security requires an Enterprise or Demo license, which can be obtained [here](https://www.aquasec.com/aqua-signup/?source=pcf).
+Aqua Security requires an Enterprise or trial license, which can be obtained [here](https://www.aquasec.com/aqua-signup/?type=pcf).
 
 1. Paste the key in the **Aqua Security License** field.
     ![installation-license](images/license.png)
@@ -44,13 +44,11 @@ You can configure Aqua Security to use the provided internal PostgreSQL database
 
 #### <a id="configuration-database-internal"></a>Internal Database Configuration
 
-<p class='note warning'><strong>WARNING:</strong> The internal PostgreSQL database provided with Aqua Security is a single PostgreSQL instance by default. To enable HA options, please see [configuration-system-ha].</p>
-
 If you want to use internal databases for your deployment, do the following:
 
 1. In **Aqua Security > Settings**, select **Databases**.
 
-1. Select **Internal Database (Highly-Availibility not guaranteed)**.
+1. Select **Internal Database (High-availablity not guaranteed)**.
     ![installation-database-internal](images/database-internal.png)
 
 1. Click **Save**.
@@ -81,17 +79,6 @@ For installations that require the use of external PostgreSQL databases for your
 
 4. Click **Save**.
 
-#### <a id="configuration-system-ha"></a>Aqua Console and Database HA
-
-The Aqua Security for PCF tile includes HA options for resource allocation the Aqua Console and DB componants. In order to configure the tile to utilize redundancies, do the following:
-
-1. Navigate to the **Resource Config** tab.
-
-1. Note the default options: 1 DB VM, 1 haproxy VM, and 1 Aquasec VM.
-
-1. To implement HA, scale up to two instances of each component.
-
-
 ### <a id="configuration-stemcell"></a>Stemcell
 
 If required to upload a particular stemcell series, you can find the latest available stemcell at [Pivotal Network](https://network.pivotal.io/products/stemcells).
@@ -101,3 +88,5 @@ If required to upload a particular stemcell series, you can find the latest avai
 ## <a id="installation"></a>Installation
 
 1. Return to the Ops Manager Installation Dashboard and click **Apply Changes** to install Aqua Security tile.
+
+![installation-shield-stemcell](images/pending-changes.png)
