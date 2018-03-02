@@ -20,44 +20,33 @@ The image scanning process is initiated by:
 * Integrating the Aqua Management Console with either a public image registry like Docker Hub, or with a private image registry and then adding images from a repository in that registry.
 * Scheduling a container scan after adding a Registry
 
-During this process, Aqua scans selected images from the registry and issues alerts when detecting vulnerabilities. You can view the scan results by clicking on a repository to view vulnerability scan details of its images, as described in the View Scan Results section below.
+During this process, Aqua scans selected images from the registry and issues alerts when detecting vulnerabilities. You can view the scan results by clicking on a repository to view vulnerability scan details of its images, as described in the [View Scan Results](#view-results) section below.
 
 ## <a id="view-results"></a> View Scan Results
 
-After the scan is completed you can view the scan results.
+After the scan is completed, you can view the scan results. Do the following:
 
-**To view scan results:**
+1. In the **Aqua Management Console**, select **Images** to display the **Repositories & Images** screen.
 
-In the **Aqua Management Console**, select **Images** to display the **Repositories & Images** screen.
-Click on a repository to view vulnerability scan details of its images.
-
+1. Click on a repository to view vulnerability scan details of its images.
 ![view-repoimages](images/repoimages.png)
 
-Click on an image to view a summary of the image's Image Assurance status. Click on any of the summary boxes to view details.
-
-
+1. Click on an image to view a summary of the image's Image Assurance status. Click on any of the summary boxes to view details.
 ![view-repo](images/image.png)
 
-**Risk**
-This tab displays a pie chart of the distribution of vulnerabilities, that are detailed in the vulnerabilities tab, and general information about the image.
+**Risk**: This tab displays a pie chart of the distribution of vulnerabilities detailed in the Vulnerabilities tab, as well as general information about the image.
 
-**Vulnerabilities**
-The scan status displays with the vulnerability name, severity, package and installed version. Click on a CVE to view the vulnerability details. You can further click on the Reference link to the National Vulnerability Database (NVD) entry for that specific vulnerability, where you can view additional information for the selected entry.
+**Vulnerabilities**: The scan status displays the vulnerability name, severity, package, and installed version. Click on a CVE to view the vulnerability details. You can further click on the Reference link to the National Vulnerability Database (NVD) entry for that specific vulnerability, where you can view additional information for the selected entry.
 
-**Resources**
-This tab displays a list of the packages in the image.
+**Resources**: This tab displays a list of the packages in the image.
 
-**Sensitive Data**
-To view the sensitive data in the image you must first enable sensitive data scan. To do this, go to the Settings screen and under Scan Options select Scan sensitive data in images.
+**Sensitive Data**: To view the sensitive data in the image, you must first enable sensitive data scan. To do this, go to **Settings > Scan Options** and select **Scan sensitive data in images**.
 
-**Malware**
-This tab displays a list of files whose hash matches known malware.
+**Malware**: This tab displays a list of files that match known malware.
 
-**Information**
-This tab displays the information about scan times, env variables, etc.
+**Information**: This tab displays the information about scan times, env variables, etcetera.
 
-**Audit**
-The audit tab is a quick-link to a filtered view of the system audit log where your logs operations are displayed (Alert/Block/Detect/Success).
+**Audit**: The audit tab is a quicklink to a filtered view of the system audit log where your logs operations are displayed.
 
 
 ## <a id="decorator"></a>Aqua Decorator Buildpack
