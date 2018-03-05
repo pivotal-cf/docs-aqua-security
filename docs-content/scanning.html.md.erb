@@ -110,7 +110,7 @@ $ for registry in $(cf curl /v2/spaces | jq -c '.resources[] | {name: "\(.entity
 <p class='note'><strong>Note:</strong> If spaces in your environment change often, it is recommended to run the above snippet on a schedule through an automation tool like Concourse or Jenkins.</p>
 
 ## <a id="staging-environment-variable-group"></a> Enable Aqua Decorator for All Apps
-
+set-staging-environment-variable-groupset-staging-environment-variable-group
 You can enable security scanning globally by using the staging environment variable group.
 All apps will use the same Aqua username and password. Environment variables set through a staging envrionment variable group will be visible to all app developers through `cf env {APP-NAME}`.
 
