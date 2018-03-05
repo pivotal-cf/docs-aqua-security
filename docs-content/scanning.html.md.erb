@@ -125,7 +125,7 @@ set-staging-environment-variable-groupset-staging-environment-variable-group
 You can enable security scanning globally by using the staging environment variable group.
 All apps will use the same Aqua username and password. Environment variables set through a staging envrionment variable group will be visible to all app developers through `cf env {APP-NAME}`.
 
-Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for all PCF apps during staging by running the commands below. You must log in as a PCF admin with `cf login`.Feel free to reach out over email fmelo@pivotal.io as well
+Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for all PCF apps during staging by running the commands below. You must log in as a PCF admin with `cf login`.
 
 <pre class="terminal">
 $ cf set-staging-environment-variable-group '{"AQUA_REGISTRY":"PIE23","AQUA_USERNAME":"pcf-scanner","AQUA_PASSWORD":"abc12345","AQUA_SERVER_URL":"http://2.3.4.5:8080"}'
