@@ -7,7 +7,7 @@ owner: Partners
 
 This section describes Aqua image vulnerability scanning.
 
-Aqua provides security analysis for Pvotal Cloud Foundry (PCF) applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
+Aqua provides security analysis for Pivotal Cloud Foundry (PCF) applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
 Aqua scans images for common vulnerabilities and exposures (CVEs) listed on the NVD website, a U.S. government repository of standards-based vulnerability management data as well as data from other industry sources which is curated by Aqua Security research staff.
 It is crucial to scan images and repositories for known vulnerabilities that could impact the system information assurance and security leading to security risks. Scanning an image for vulnerabilities reduces these incidents and makes you more aware of the known and defined vulnerable images in the system.
 
@@ -82,7 +82,7 @@ The decorator is able to create these registries on demand, if the Aqua username
 
 ### <a id="creating-static-registry"></a>Creating a Registry with a Script
 
-You can create a registry of the Dummy type through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/) and [curl](https://curl.haxx.se/docs/install.html) installed.
+You can create a registry of the Cloud Foundry Registry type through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/) and [curl](https://curl.haxx.se/docs/install.html) installed.
 
 <pre class="terminal">
 $ export AQUA_USERNAME=pcf-scanner
@@ -96,7 +96,7 @@ $ curl -s -X POST -d "${data}" -H "Content-Type: application/json" -u "${AQUA_US
 
 ### <a id="seed-registry"></a>Pre-Seed Registries
 
-You can create a registry of the Dummy type for each PCF space through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html), and [cf CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed. You must log in as a PCF admin with `cf login`.
+You can create a registry of the Cloud Foundry Registry type for each PCF space through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html), and [cf CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed. You must log in as a PCF admin with `cf login`.
 
 <pre class="terminal">
 $ export AQUA_USERNAME=administrator
