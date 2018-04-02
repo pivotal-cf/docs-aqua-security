@@ -9,33 +9,34 @@ Do not use this product in a PCF production environment.</p>
 
 This topic describes the Aqua Security for PCF tile.
 
-As a PCF operator, you can download and install the Aqua Security for PCF tile to deploy the Aqua Command Center in your PCF environment, which security teams may then use to provision image assurance policies.
-As a developer, you can perform security scanning of your PCF applications at build time with immediate feedback about vulnerabilities and open source licenses in your code, all while complying with corporate GRC policies.
-Aqua Security for PCF also includes all the same level of protection for docker containers, registries, and runtime that Aqua Security Enterprise provides.
+As a PCF operator, you can download and install the Aqua Security for PCF tile to deploy the Aqua Command Center in your PCF environment, which security teams can then use to set policies that determine whether your PCF droplets meet your organization’s security policies and may be deployed.
+As a developer, you can perform security scanning of your PCF applications at build time with immediate feedback about vulnerabilities and open source licenses in your code, all while complying with corporate GRC policies. 
+
 
 
 ## <a id='overview'></a>Overview
 
-The Aqua solution is easy to operate, providing you with the most advanced scanning capabilities on the market today. It supports more than forty languages, including Java, Go, C++, Python, Ruby, NodeJS, and more, as well as static binaries.
-In addition, you can use our set of APIs to integrate Aqua with your preferred CI/CD tools for security testing as part of the build, with Active Directory/LDAP for user authentication and with SIEM/analytics to output audit and alert data.
+Aqua Security enables enterprises to secure their container and cloud-native applications from development to production, accelerating application deployment and bridging the gap between DevOps and IT security. Aqua's Container Security Platform provides full visibility into container activity, allowing organizations to detect and prevent suspicious activity and attacks in real time. Integrated with container lifecycle and orchestration tools, the Aqua platform provides transparent, automated security while helping to enforce policy and simplify regulatory compliance.
 
-The Aqua Security for PCF tile provides all of the components that make up an Aqua Command Center. The tile also includes a buildpack decorator component that allows for the implementation of Aqua Droplet Assurance Policy enforcement.
+ 
+Aqua Security for PCF enables customers to automatically scan droplets using the Aqua Decorator buildpack. It supports more than forty languages, including Java, Go, C++, Python, Ruby, NodeJS, and more, as well as static binaries. Aqua then either allows or prevents the droplets' transition to the running environment, based on the scan results matched against your organization's security policy. In addition, users can view detailed droplet risk information directly from within their preferred CI/CD tool (e.g. Concourse, Jenkins, TeamCity, etc.).
+
 
 
 ## <a id='features'></a>Key Features
 
-With Aqua, you can benefit from these capabilities:
+With Aqua Security for PCF, you can benefit from these capabilities:
 
-- Perform staging environment scanning of droplets for known vulnerabilities based on data from multiple resource feeds (public CVEs, vendor-issued, proprietary vulnerability, malware, and data streams)
-- Block unauthorized droplets from being uploaded to blob stores based on droplet assurance policies
-- Stop unknown droplets
-- Stop droplets by CVEs and score
-- Detect and stop droplets with hardcoded embedded secrets and/or private information such as keys
-- Add custom compliance checks (bash, OPAL, and powershell-based)
-- View actionable mitigation information on how to mitigate detected vulnerabilities
-- Gain visibility into droplet vulnerabilities and misconfigurations directly from CI tools (e.g. Concourse, Jenkins, TeamCity, Bamboo, Microsoft VSTS, etc.) and Aqua dashboard
-- Scan docker registries to identify unregistered containers
-- Implement Aqua Console components with HA options
+●	Scan droplets for known vulnerabilities based on data from multiple resource feeds (public CVEs, vendor-issued, proprietary vulnerability data streams, and malware)
+●	Block unauthorized droplets based on droplet assurance policies, for example:
+○	    Stop unknown droplets
+○	    Stop droplets by CVEs and score
+○	    Detect and stop droplets with hardcoded secrets
+●	Add custom compliance checks (bash, OPAL, and powershell-based)
+●	View actionable mitigation information on how to mitigate detected vulnerabilities
+●	Gain visibility into droplet vulnerabilities directly from CI tools (e.g. Concourse, Jenkins, TeamCity, Bamboo, Microsoft VSTS, etc.) and Aqua dashboard
+●	Scan docker registries to identify unregistered containers
+
 
 
 ## <a id="snapshot"></a>Product Snapshot
