@@ -55,6 +55,7 @@ Build-time vulnerabilty scanning of PCF apps is achieved through the `aquasec-de
 The decorator will be triggered if the `AQUA_SERVER_URL` envrionment variable is set for an app during staging.
 To function properly, the Aqua microscanner invoked by the the decorator will require you to set an `AQUA_USERNAME` and `AQUA_PASSWORD`.
 Aqua recommends implementing a `staging-environment-variable-group` variable so as to not impact developers current environment settings.
+In the case of a cf push that fails to pass the droplet assurance policy, the json output of the scanner will be sent to stdout giving the developer or CI a direct feedback loop. This empowers developers directly.
 
 ### <a id="registry-naming"></a> Blobstore (Registry) Naming Conventions
 
