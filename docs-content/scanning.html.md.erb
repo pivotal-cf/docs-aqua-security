@@ -7,7 +7,7 @@ owner: Partners
 
 This section describes Aqua image vulnerability scanning.
 
-Aqua provides security analysis for Pvotal Cloud Foundry (PCF) applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
+Aqua provides security analysis for Pivotal Cloud Foundry (PCF) applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
 Aqua scans images for common vulnerabilities and exposures (CVEs) listed on the NVD website, a U.S. government repository of standards-based vulnerability management data as well as data from other industry sources which is curated by Aqua Security research staff.
 It is crucial to scan images and repositories for known vulnerabilities that could impact the system information assurance and security leading to security risks. Scanning an image for vulnerabilities reduces these incidents and makes you more aware of the known and defined vulnerable images in the system.
 
@@ -82,7 +82,7 @@ The decorator is able to create these registries on demand, if the Aqua username
 
 ### <a id="creating-static-registry"></a>Creating a Registry with a Script
 
-You can create a registry of the Dummy type through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/) and [curl](https://curl.haxx.se/docs/install.html) installed.
+You can create a registry of the Cloud Foundry Registry type through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/) and [curl](https://curl.haxx.se/docs/install.html) installed.
 
 <pre class="terminal">
 $ export AQUA_USERNAME=pcf-scanner
@@ -96,7 +96,7 @@ $ curl -s -X POST -d "${data}" -H "Content-Type: application/json" -u "${AQUA_US
 
 ### <a id="seed-registry"></a>Pre-Seed Registries
 
-You can create a registry of the Dummy type for each PCF space through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html), and [cf CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed. You must log in as a PCF admin with `cf login`.
+You can create a registry of the Cloud Foundry Registry type for each PCF space through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html), and [cf CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed. You must log in as a PCF admin with `cf login`.
 
 <pre class="terminal">
 $ export AQUA_USERNAME=administrator
@@ -114,7 +114,7 @@ set-staging-environment-variable-groupset-staging-environment-variable-group
 You can enable security scanning globally by using the staging environment variable group.
 All apps will use the same Aqua username and password. Environment variables set through a staging envrionment variable group will be visible to all app developers through `cf env {APP-NAME}`.
 
-Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for all PCF apps during staging by running the commands below. You must log in as a PCF admin with `cf login`.
+Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for all PCF apps during staging by running the commands below. Additionally if the environment uses self-signed certificates for the Aqua Server you must set `AQUA_VERIFY_CERTS="0"`. The scanning buildpack has an option to display the scan result URL in the console. Use `AQUA_SHOW_URL="1"` to enable this feature. You must be logged in as a PCF admin with `cf login` to set these variables globally.
 
 <pre class="terminal">
 $ cf set-staging-environment-variable-group '{"AQUA_REGISTRY":"PIE23","AQUA_USERNAME":"pcf-scanner","AQUA_PASSWORD":"abc12345","AQUA_SERVER_URL":"http://2.3.4.5:8080"}'
