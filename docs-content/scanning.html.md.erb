@@ -91,7 +91,7 @@ $ export AQUA_PASSWORD=password set in console
 $ export AQUA_SERVER_URL=http://aquasec.[system_domain]
 $ export AQUA_REGISTRY=example
 $ data=$(jq -n -c --arg registry "${AQUA_REGISTRY}" '{name: $registry, type: "API"}')
-$ curl -s -X POST -d "${data}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_PASSWORD}" \
+$ curl -s -k -X POST -d "${data}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_PASSWORD}" \
     ${AQUA_SERVER_URL%/}/api/v1/registries
 </pre>
 
@@ -104,7 +104,7 @@ $ export AQUA_USERNAME=administrator
 $ export AQUA_PASSWORD=# password from credentials tab in opsmanager
 $ export AQUA_SERVER_URL=http://aquasec.[system_domain]
 $ for registry in $(cf curl /v2/spaces | jq -c '.resources[] | {name: "\(.entity.name)-\(.metadata.guid | split("-") | .[0])", type: "API"}'); do
-    curl -s -X POST -d "${registry}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_PASSWORD}" ${AQUA_SERVER_URL%/}/api/v1/registries
+    curl -s -k -X POST -d "${registry}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_PASSWORD}" ${AQUA_SERVER_URL%/}/api/v1/registries
   done
 </pre>
 
