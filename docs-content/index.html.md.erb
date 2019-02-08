@@ -3,6 +3,11 @@ title: Aqua Security for PCF
 owner: Partners
 ---
 
+<p class="note warning"><strong> WARNING:</strong>
+This tile requires a Trusty stemcell.
+The end of life date for Ubuntu Trusty is April 2019.
+If a security vulnerability is found on this stemcell after April, it will not be fixed.</p>
+
 This topic describes the Aqua Security for PCF tile.
 
 As a PCF operator, you can download and install the Aqua Security for PCF tile to deploy the Aqua Command Center in your PCF environment, which security teams can then use to set policies that determine whether your PCF droplets meet your organization’s security policies and may be deployed.
@@ -63,6 +68,10 @@ The following table provides version and version-support information about Aqua 
     <tr>
         <td>Compatible Pivotal Application Service version(s)</td>
         <td>v1.11.x, v1.12.x, v2.0.x, and v2.1.x</td>
+    </tr>
+    <tr>
+       <td>BOSH stemcell version</td>
+       <td>Ubuntu Trusty</td>
     </tr>
     <tr>
         <td>IaaS support</td>
