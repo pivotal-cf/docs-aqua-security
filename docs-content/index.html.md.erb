@@ -3,26 +3,16 @@ title: Aqua Security for PCF
 owner: Partners
 ---
 
-<p class="note warning"><strong> WARNING:</strong>
-This tile requires a Trusty stemcell.
-The end of life date for Ubuntu Trusty is April 2019.
-If a security vulnerability is found on this stemcell after April, it will not be fixed.</p>
-
 This topic describes the Aqua Security for PCF tile.
 
 As a PCF operator, you can download and install the Aqua Security for PCF tile to deploy the Aqua Command Center in your PCF environment, which security teams can then use to set policies that determine whether your PCF droplets meet your organization’s security policies and may be deployed.
 As a developer, you can perform security scanning of your PCF applications at build time with immediate feedback about vulnerabilities and open source licenses in your code, all while complying with corporate GRC policies. 
 
-
-
 ## <a id='overview'></a>Overview
 
 Aqua Security enables enterprises to secure their container and cloud-native applications from development to production, accelerating application deployment and bridging the gap between DevOps and IT security. Aqua's Container Security Platform provides full visibility into container activity, allowing organizations to detect and prevent suspicious activity and attacks in real time. Integrated with container lifecycle and orchestration tools, the Aqua platform provides transparent, automated security while helping to enforce policy and simplify regulatory compliance.
-
  
 Aqua Security for PCF enables customers to automatically scan droplets using the Aqua Decorator buildpack. It supports more than forty languages, including Java, Go, C++, Python, Ruby, NodeJS, and more, as well as static binaries. Aqua then either allows or prevents the droplets' transition to the running environment, based on the scan results matched against your organization's security policy. In addition, users can view detailed droplet risk information directly from within their preferred CI/CD tool (e.g. Concourse, Jenkins, TeamCity, etc.).
-
-
 
 ## <a id='features'></a>Key Features
 
@@ -38,11 +28,7 @@ With Aqua Security for PCF, you can benefit from these capabilities:
 * Gain visibility into droplet vulnerabilities directly from CI tools (e.g. Concourse, Jenkins, TeamCity, Bamboo, Microsoft VSTS, etc.) and Aqua dashboard
 * Scan docker registries to identify unregistered containers
 
-
-
 ## <a id="snapshot"></a>Product Snapshot
-
-<p class='note'><strong>Note:</strong> As of PCF v2.0, Elastic Runtime is renamed Pivotal Application Service (PAS).</p>
 
 The following table provides version and version-support information about Aqua Security.
 
@@ -51,27 +37,27 @@ The following table provides version and version-support information about Aqua 
     <th>Details</th>
     <tr>
         <td>Tile version</td>
-        <td>0.8.9</td>
+        <td>1.0.0</td>
     </tr>
     <tr>
         <td>Release date (GA)</td>
-        <td>September 28, 2018</td>
+        <td>March 19, 2019</td>
     </tr>
     <tr>
         <td>Software component version</td>
-        <td>0.8.9 </td>
+        <td>1.0.0 </td>
     </tr>
     <tr>
         <td>Compatible Ops Manager version(s)</td>
-        <td>v1.11.x, v1.12.x, v2.0.x, and v2.1.x</td>
+        <td>v2.1.x, v2.2.x, v2.3.x, and v2.4.x</td>
     </tr>
     <tr>
         <td>Compatible Pivotal Application Service version(s)</td>
-        <td>v1.11.x, v1.12.x, v2.0.x, and v2.1.x</td>
+        <td>v2.1.x, v2.2.x, v2.3.x, and v2.4.x</td>
     </tr>
     <tr>
        <td>BOSH stemcell version</td>
-       <td>Ubuntu Trusty</td>
+       <td>Ubuntu Xenial</td>
     </tr>
     <tr>
         <td>IaaS support</td>
@@ -80,14 +66,11 @@ The following table provides version and version-support information about Aqua 
 
 </table>
 
-<p class="note"><strong>Note:</strong>
-Upgrades from Aqua Security for PCF v0.8.1 or v0.8.7 to v0.8.9 are not supported. If you previously installed Aqua Security for PCF v0.8.7 or v0.8.1, uninstall it and install the latest version.</p>
-
-
 ## <a id="reqs"></a>Requirements
 
 Aqua Security for PCF has the following requirements:
-A purchased or thirty-day trial license provided by Aqua Security. You can request a trial license [here](https://www.aquasec.com/aqua-signup/?type=pcf) or by emailing [Aqua Security Sales](mailto:pcf-sales@aquasec.com).
+
+A purchased or thirty-day trial license provided by [**Aqua Security**](https://www.aquasec.com). You can request a trial license [**here**](https://www.aquasec.com/aqua-signup/?type=pcf) or by emailing [Aqua Security Sales](mailto:pcf-sales@aquasec.com).
 
 
 ## <a id="feedback"></a>Feedback
