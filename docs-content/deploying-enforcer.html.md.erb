@@ -1,0 +1,145 @@
+---
+title: Deploying Aqua Enforcers
+owner: Partners
+---
+
+## <a id="image-scanning"></a> Deploying Aqua Enforcers
+
+This section describes the deployment of an Aqua Enforcer with BOSH on all Diego cells in your CF cluster nodes by using a deployment add-on, which automatically deploys a single Aqua Enforcer container on each Diego cell in your cluster.
+
+First, you create a new Enforcer group in the Aqua Server. An Enforcer group is a set of zero or more Aqua Enforcers with the same configuration. You need to create one that will work with Pivotal Application Service (PAS); you cannot use the default Enforcer group for this.
+
+A byproduct of the Enforcer group creation is the add-on required for BOSH. Aqua does not automatically deploy the Enforcer on Diego cells; you do this by using BOSH commands.
+
+All Enforcers deployed with the following commands will have the same configuration. If you need Enforcers with different characteristics, you will need to create one or more additional Enforcer groups.
+
+### <a id="create-an-enforcer-group"></a> Create an Enforcer group
+
+1. In the Aqua UI: Click **Enforcers**.
+2. Click **Add Enforcer Group**.
+3. On the **Enforcers > Create new group** screen that appears, fill in these settings: 
+
+_Basic parameters_
+Parameter | Description
+------------ | -------------
+Enforcer Type | Select Aqua Enforcer
+Group Name | Enter the name for the Enforcer Group; this name will appear in the list of Enforcer groups
+OS Type | Select the OS type for the host
+Orchestrator | Pivotal Application Service (PAS)
+Service Account | (do not specify this)
+Container Runtime | Select the container runtime environment from the drop-down list
+Project | (do not specify this)
+Logical Name (optional) | A logical name for the Enforcer image; this can be any text string
+Aqua Gateways | Select the Aqua Gateway(s) that the Enforcer will use to communicate with the Aqua Server. At this point, there will be only one Gateway.
+Installation Token | Leave this field blank; a value will be generated automatically, and used in the DaemonSet
+Description (optional) | A description for the DaemonSet YAML command
+
+_Security settings_
+Setting | Explanation
+------------ | -------------
+Enforcement Mode | Select **Enforcement** for the Enforcer to enforce Runtime Policies on containers on this host. Select **Audit Only** if you do not want the Enforcer to enforce Runtime Policies. In Audit Only mode, the Enforcer will add audit entries for any Runtime Policy violations.
+Allowed Aqua Labels | Select labels that must be assigned to images in order for the images to be permitted to run on the host; if blank, an image with any (or no) label will be permitted.
+Allowed Registries | Select registries from which images can be pulled, to run as containers on the host; if blank, all registries are permitted.
+
+_Auditing settings_
+Setting | Explanation
+------------ | -------------
+Audit host successful login events | If selected, successful host logins will generate Audit events.
+Audit host failed login events | If selected, failed host logins will generate Audit events.
+
+_Container Protection settings_
+Setting | Explanation
+------------ | -------------
+Image Assurance | Selecting this option will prevent containers from running based on Container Runtime Policy controls such as "Block Unregistered Images" and "Block Non-compliant Images", or the "Blacklisted Images" control under the Default Image Assurance Policy.
+Runtime Activity | Selecting this option will apply Container Runtime Policies, Image Profiles, and Service membership rules.
+System Call Monitoring | This option is available only if Runtime Activity is selected. Selecting this option will allow profiling and monitoring system calls made by running containers.
+Container Firewall | Selecting this option will apply Container Firewall Policies and allow recording network maps for services.
+User Access Control | Selecting this option will apply User Access Control Policies. Enforcers must be deployed with the "AQUA_RUNC_INTERCEPTION" environment variable set to 0 in order to use User Access Control Policies.
+
+_Host Protection settings_
+Setting | Explanation
+------------ | -------------
+Runtime Controls | Selecting this option will apply host-related Container Runtime Policy controls: Forensics (Host), Whitelisted OS Users and Groups, and Blacklisted OS Users and Groups.
+
+_Advanced settings_
+Setting | Explanation
+------------ | -------------
+Host Images Discovery | Selecting this option will allow Enforcers to discover local host images. The images will be listed under Images → HOST IMAGES, as well as under Hosts, in the Images tabs of given hosts.
+
+4. Click **Create Group**. You should see a new screen titled **Enforcers > Create new group**.
+
+### Deploy the Enforcer add-on
+
+1. Download the <a href="https://download.aquasec.com/pcf/4.2/aqua-enforcer-release.tgz" target="_blank">Aqua Enforcer BOSH release</a>.
+2. Upload the Aqua Enforcer BOSH release
+```
+bosh -e <BOSH_ENV> -n upload-release aqua-enforcer-release.tgz
+```
+
+3. Create the `addon.yaml` deployment file by first copying the text below to a file called `addon.yaml`.
+```
+name: aqua-enforcer
+
+addons:
+- name: enforcer
+  jobs:
+  - name: aqua-enforcer
+    release: aqua-enforcer
+    properties:
+      token: '<AQUA_ENFORCER_TOKEN>'
+      server: '<AQUA_SERVER>:3622'
+  include:
+    deployments:
+    - <PAS_DEPLOYMENT_NAME>
+    jobs:
+    - name: garden
+      release: garden-runc
+    instance_groups:
+    - compute
+
+update:
+  canaries: 1
+  max_in_flight: 10
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+
+releases:
+- name: aqua-enforcer
+  version: 4.2.0
+```
+
+4. Update this file by substituting the following with parameters specific to your environment:
+  * `<AQUA_ENFORCER_TOKEN>`: Your Aqua Enforcer installation token. The value is available in Aqua UI > Enforcers > {PAS Enforcer Group} > Edit Group.
+  * `<AQUA_SERVER>`: IP address of the Aquasec Job. you can find it by navigating to Ops Manager > Installation Dashboard > Aqua Security for PCF → Status. Use the IP address for the Aquasec job.
+  * `<PAS_DEPLOYMENT_NAME>`: Cloud Foundry deployment name in your PAS environment
+5. Update the runtime configuration by issuing this command.
+```
+bosh -e <BOSH_ENV> update-runtime-config --name aqua-enforcer addon.yaml
+```
+6. Save the PAS deployment and redeploy: Copy the commands that appear below. Set your PAS deployment name in the parameter `<PAS_DEPLOYMENT_NAME>` and issue the commands.
+```
+bosh -e <BOSH_ENV> manifest -d <PAS_DEPLOYMENT_NAME> > cf.yaml
+bosh -e <BOSH_ENV> deploy -d <PAS_DEPLOYMENT_NAME> cf.yaml
+```
+
+### Remove the Enforcer add-on from PAS
+
+1. Issue this command to delete the runtime configuration for the Enforcer.
+```
+bosh -e <BOSH_ENV> delete-config --type=runtime --name=aqua-enforcer
+```
+2. Save the PAS deployment and redeploy. Copy the commands that appear below. Set your PAS deployment name in the parameter `<PAS_DEPLOYMENT_NAME>` and issue the commands.
+```
+bosh -e <BOSH_ENV> manifest -d <PAS_DEPLOYMENT_NAME> > cf.yaml
+bosh -e <BOSH_ENV> deploy -d <PAS_DEPLOYMENT_NAME> cf.yaml
+```
+
+**WARNING**
+**Enforcer removal issue and workaround**
+
+There is a known issue in the Enforcer removal process; the Enforcer PID file still exists after removing the Enforcer add-on from PAS.
+
+To work around this issue and complete the removal process, the following command should be executed on all PCF VMs on which the Enforcer was installed:
+```
+rm -f /var/vcap/sys/run/aqua-enforcer/aqua-enforcer.pid
+```

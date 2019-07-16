@@ -3,9 +3,9 @@ title: Enable App Scanning
 owner: Partners
 ---
 
-## <a id="image-scanning"></a> Image Vulnerability Scanning
+## <a id="image-scanning"></a> Image Scanning
 
-This section describes Aqua image vulnerability scanning.
+This section describes Aqua scanning of images for vulnerabilities, sensitive data, and malware.
 
 Aqua provides security analysis for Pivotal Cloud Foundry (PCF) applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
 Aqua scans images for common vulnerabilities and exposures (CVEs) listed on the NVD website, a U.S. government repository of standards-based vulnerability management data as well as data from other industry sources which is curated by Aqua Security research staff.
@@ -16,7 +16,7 @@ Each image is scanned for vulnerabilities when both its OS packages and developm
 The image scanning process is initiated by:
 
 * Performing a `cf push`
-* A build pipeline tool like Consourse or Jenkins
+* A build pipeline tool like Concourse or Jenkins
 * Integrating the Aqua Management Console with either a public image registry like Docker Hub, or with a private image registry and then adding images from a repository in that registry.
 * Scheduling a container scan after adding a Registry
 
@@ -26,7 +26,7 @@ During this process, Aqua scans selected images from the registry and issues ale
 
 After the scan is completed, you can view the scan results. Do the following:
 
-1. In the **Aqua Management Console**, select **Images** to display the **Repositories & Images** screen.
+1. In the **Aqua Management Console**, select **Images** to display the **Images** screen.
 
 1. Click on a repository to view vulnerability scan details of its images.
 ![view-repoimages](images/repoimages.png)
@@ -55,7 +55,7 @@ Build-time vulnerabilty scanning of PCF apps is achieved through the `aquasec-de
 The decorator will be triggered if the `AQUA_SERVER_URL` envrionment variable is set for an app during staging.
 To function properly, the Aqua microscanner invoked by the the decorator will require you to set an `AQUA_USERNAME` and `AQUA_PASSWORD`.
 Aqua recommends implementing a `staging-environment-variable-group` variable so as to not impact developers current environment settings.
-In the case of a `cf push` that fails to pass the droplet assurance policy, the JSON output of the scanner will be sent to `stdout`, giving the developer or CI a direct feedback loop. This empowers developers directly.
+In the case of a `cf push` that fails to pass the assurance policy, the JSON output of the scanner will be sent to `stdout`, giving the developer or CI a direct feedback loop. This empowers developers directly.
 
 ### <a id="registry-naming"></a> Blobstore (Registry) Naming Conventions
 
