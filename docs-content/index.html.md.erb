@@ -1,32 +1,31 @@
----
 title: Aqua Security for PCF
 owner: Partners
 ---
 
-This topic describes the Aqua Security for PCF tile.
-
-As a PCF operator, you can download and install the Aqua Security for PCF tile to deploy the Aqua Command Center in your PCF environment, which security teams can then use to set policies that determine whether your PCF droplets meet your organization’s security policies and may be deployed.
-As a developer, you can perform security scanning of your PCF applications at build time with immediate feedback about vulnerabilities and open source licenses in your code, all while complying with corporate GRC policies. 
+This topic describes the **Aqua Cloud Native Security Platform for PCF**.
 
 ## <a id='overview'></a>Overview
 
-Aqua Security enables enterprises to secure their container and cloud-native applications from development to production, accelerating application deployment and bridging the gap between DevOps and IT security. Aqua's Container Security Platform provides full visibility into container activity, allowing organizations to detect and prevent suspicious activity and attacks in real time. Integrated with container lifecycle and orchestration tools, the Aqua platform provides transparent, automated security while helping to enforce policy and simplify regulatory compliance.
- 
-Aqua Security for PCF enables customers to automatically scan droplets using the Aqua Decorator buildpack. It supports more than forty languages, including Java, Go, C++, Python, Ruby, NodeJS, and more, as well as static binaries. Aqua then either allows or prevents the droplets' transition to the running environment, based on the scan results matched against your organization's security policy. In addition, users can view detailed droplet risk information directly from within their preferred CI/CD tool (e.g. Concourse, Jenkins, TeamCity, etc.).
+Aqua Cloud Native Security Platform (CSP) enables enterprises to secure their applications from development through production, accelerating application deployment and bridging the gap between DevOps and IT security. Aqua CSP provides full visibility into application instance activity, allowing organizations to detect and prevent suspicious activity and attacks in real time. Aqua CSP provides transparent, automated security while helping enforce policies and simplify regulatory compliance.
 
 ## <a id='features'></a>Key Features
 
 With Aqua Security for PCF, you can benefit from these capabilities:
 
-* Scan droplets for known vulnerabilities based on data from multiple resource feeds (public CVEs, vendor-issued, proprietary vulnerability data streams, and malware)
-* Block unauthorized droplets based on droplet assurance policies, for example:
-  * Stop unknown droplets
-  * Stop droplets by CVEs and score
-  * Detect and stop droplets with hardcoded secrets
-* Add custom compliance checks (bash, OPAL, and powershell-based)
-* View actionable mitigation information on how to mitigate detected vulnerabilities
-* Gain visibility into droplet vulnerabilities directly from CI tools (e.g. Concourse, Jenkins, TeamCity, Bamboo, Microsoft VSTS, etc.) and Aqua dashboard
-* Scan docker registries to identify unregistered containers
+**Applications**
+
+* Automatically scan applications using the Aqua Decorator buildpack. Applications are scanned for known vulnerabilities, sensitive data, and malware, based on data from multiple resource feeds (public CVEs, vendor-issued, and proprietary vulnerability data streams). Scanning supports multiple languages, including Java, C++, Python, Ruby, and NodeJS, as well as static binaries.
+* Determine application compliance with corporate security (GRC) policies
+* Define and use an assurance policy to block unauthorized applications, such as those that contain high-severity vulnerabilities, hard-coded secrets, or malware
+* Add custom compliance check scripts
+* View actionable information on how to mitigate detected vulnerabilities
+* Gain visibility into application vulnerabilities directly from CI tools (e.g., Concourse, Jenkins, TeamCity, Bamboo, Microsoft VSTS, etc.)
+* Secure applications during runtime: block risky applications from running, prevent running applications from performing specified activities, and impose network firewall policies
+
+**Diego cells**
+* Automatically scan Diego cells hosts. Diego cells are scanned for known vulnerabilities, sensitive data, and malware, based on data from multiple resource feeds (public CVEs, vendor-issued, and proprietary vulnerability data streams).
+* Determine Diego cell compliance with corporate security (GRC) policies and CIS Benchmarks
+* Monitor user activity inside Diego cells
 
 ## <a id="snapshot"></a>Product Snapshot
 
@@ -37,23 +36,23 @@ The following table provides version and version-support information about Aqua 
     <th>Details</th>
     <tr>
         <td>Tile version</td>
-        <td>1.0.0</td>
+        <td>4.2.0</td>
     </tr>
     <tr>
         <td>Release date (GA)</td>
-        <td>March 19, 2019</td>
+        <td> March 19th, 2019</td>
     </tr>
     <tr>
         <td>Software component version</td>
-        <td>1.0.0 </td>
+        <td>4.2.0 </td>
     </tr>
     <tr>
         <td>Compatible Ops Manager version(s)</td>
-        <td>v2.1.x, v2.2.x, v2.3.x, and v2.4.x</td>
+        <td>v2.3.x, v2.4.x, v2.5.x</td>
     </tr>
     <tr>
         <td>Compatible Pivotal Application Service version(s)</td>
-        <td>v2.1.x, v2.2.x, v2.3.x, and v2.4.x</td>
+        <td>v2.3.x, v2.4.x, 2.5.x</td>
     </tr>
     <tr>
        <td>BOSH stemcell version</td>
@@ -76,13 +75,13 @@ If a security vulnerability is found on this stemcell after April, it will not b
 
 Aqua Security for PCF has the following requirements:
 
-A purchased or thirty-day trial license provided by [**Aqua Security**](https://www.aquasec.com). You can request a trial license [**here**](https://www.aquasec.com/aqua-signup/?type=pcf) or by emailing [Aqua Security Sales](mailto:pcf-sales@aquasec.com).
+* A purchased or thirty-day trial license provided by [**Aqua Security**](https://www.aquasec.com). You can request a trial license [**here**](https://www.aquasec.com/aqua-signup/?type=pcf) or by emailing [Aqua Security Sales](mailto:pcf-sales@aquasec.com).
 
 
 ## <a id="feedback"></a>Feedback
-If you have a feature request, questions, or information about a bug, please email [Pivotal Cloud Foundry Feedback](mailto:cf-feedback@pivotal.io) list or send an email to[Aqua Security Support](mailto:pcf-support@aquasec.com).
+If you have a feature request, questions, or information about a bug, please email [Pivotal Cloud Foundry Feedback](mailto:cf-feedback@pivotal.io) list or send an email to [Aqua Security Support](mailto:pcf-support@aquasec.com).
 
 
 ## <a id="troubleshooting"></a>Troubleshooting
 
-For help with troubleshooting this product, contact [Aqua Security Support](mailto:pcf-support@aquasec.com)
+For help with troubleshooting this product, contact [Aqua Security Support](mailto:pcf-support@aquasec.com).
