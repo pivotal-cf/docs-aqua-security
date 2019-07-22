@@ -7,7 +7,7 @@ owner: Partners
 
 This section describes the deployment of an Aqua Enforcer with BOSH on all Diego cells in your CF cluster nodes by using a deployment add-on, which automatically deploys a single Aqua Enforcer container on each Diego cell in your cluster.
 
-First, you create a new Enforcer group in the Aqua Server. An Enforcer group is a set of zero or more Aqua Enforcers with the same configuration. You need to create one that will work with Pivotal Application Service (PAS); you cannot use the default Enforcer group for this.
+First, you create a new Enforcer group in the Aqua Server. An Enforcer group is a set of Aqua Enforcers with the same configuration. You need to create one that will work with Pivotal Application Service (PAS); you cannot use the default Enforcer group for this.
 
 A byproduct of the Enforcer group creation is the add-on required for BOSH. Aqua does not automatically deploy the Enforcer on Diego cells; you do this by using BOSH commands.
 
@@ -20,51 +20,51 @@ All Enforcers deployed with the following commands will have the same configurat
 3. On the **Enforcers > Create new group** screen that appears, fill in these settings: 
 
 _Basic parameters_
-Parameter | Description
------------- | -------------
-Enforcer Type | Select Aqua Enforcer
-Group Name | Enter the name for the Enforcer Group; this name will appear in the list of Enforcer groups
-OS Type | Select the OS type for the host
-Orchestrator | Pivotal Application Service (PAS)
-Service Account | (do not specify this)
-Container Runtime | Select the container runtime environment from the drop-down list
-Project | (do not specify this)
-Logical Name (optional) | A logical name for the Enforcer image; this can be any text string
-Aqua Gateways | Select the Aqua Gateway(s) that the Enforcer will use to communicate with the Aqua Server. At this point, there will be only one Gateway.
-Installation Token | Leave this field blank; a value will be generated automatically, and used in the DaemonSet
-Description (optional) | A description for the DaemonSet YAML command
+| Parameter | Description |
+| ------------ | ------------- |
+| Enforcer Type | Select Aqua Enforcer |
+| Group Name | Enter the name for the Enforcer Group; this name will appear in the list of Enforcer groups |
+| OS Type | Select the OS type for the host |
+| Orchestrator | Pivotal Application Service (PAS) |
+| Service Account | (do not specify this) |
+| Container Runtime | Select the container runtime environment from the drop-down list
+| Project | (do not specify this) |
+| Logical Name (optional) | A logical name for the Enforcer image; this can be any text string |
+| Aqua Gateways | Select the Aqua Gateway(s) that the Enforcer will use to communicate with the Aqua Server. At this point, there will be only one Gateway. |
+| Installation Token | Leave this field blank; a value will be generated automatically, and used in the DaemonSet |
+| Description (optional) | A description for the DaemonSet YAML command |
 
 _Security settings_
-Setting | Explanation
------------- | -------------
-Enforcement Mode | Select **Enforcement** for the Enforcer to enforce Runtime Policies on containers on this host. Select **Audit Only** if you do not want the Enforcer to enforce Runtime Policies. In Audit Only mode, the Enforcer will add audit entries for any Runtime Policy violations.
-Allowed Aqua Labels | Select labels that must be assigned to images in order for the images to be permitted to run on the host; if blank, an image with any (or no) label will be permitted.
-Allowed Registries | Select registries from which images can be pulled, to run as containers on the host; if blank, all registries are permitted.
+| Setting | Explanation |
+| ------------ | ------------- |
+| Enforcement Mode | Select **Enforcement** for the Enforcer to enforce Runtime Policies on containers on this host. Select **Audit Only** if you do not want the Enforcer to enforce Runtime Policies. In Audit Only mode, the Enforcer will add audit entries for any Runtime Policy violations. |
+| Allowed Aqua Labels | Select labels that must be assigned to images in order for the images to be permitted to run on the host; if blank, an image with any (or no) label will be permitted. |
+| Allowed Registries | Select registries from which images can be pulled, to run as containers on the host; if blank, all registries are permitted. |
 
 _Auditing settings_
-Setting | Explanation
------------- | -------------
-Audit host successful login events | If selected, successful host logins will generate Audit events.
-Audit host failed login events | If selected, failed host logins will generate Audit events.
+| Setting | Explanation
+------------ | ------------- |
+| Audit host successful login events | If selected, successful host logins will generate Audit events. |
+| Audit host failed login events | If selected, failed host logins will generate Audit events. |
 
 _Container Protection settings_
-Setting | Explanation
------------- | -------------
-Image Assurance | Selecting this option will prevent containers from running based on Container Runtime Policy controls such as "Block Unregistered Images" and "Block Non-compliant Images", or the "Blacklisted Images" control under the Default Image Assurance Policy.
-Runtime Activity | Selecting this option will apply Container Runtime Policies, Image Profiles, and Service membership rules.
-System Call Monitoring | This option is available only if Runtime Activity is selected. Selecting this option will allow profiling and monitoring system calls made by running containers.
-Container Firewall | Selecting this option will apply Container Firewall Policies and allow recording network maps for services.
-User Access Control | Selecting this option will apply User Access Control Policies. Enforcers must be deployed with the "AQUA_RUNC_INTERCEPTION" environment variable set to 0 in order to use User Access Control Policies.
+| Setting | Explanation |
+| ------------ | ------------- |
+| Image Assurance | Selecting this option will prevent containers from running based on Container Runtime Policy controls such as "Block Unregistered Images" and "Block Non-compliant Images", or the "Blacklisted Images" control under the Default Image Assurance Policy. |
+| Runtime Activity | Selecting this option will apply Container Runtime Policies, Image Profiles, and Service membership rules. |
+| System Call Monitoring | This option is available only if Runtime Activity is selected. Selecting this option will allow profiling and monitoring system calls made by running containers. |
+| Container Firewall | Selecting this option will apply Container Firewall Policies and allow recording network maps for services. |
+| User Access Control | Selecting this option will apply User Access Control Policies. Enforcers must be deployed with the "AQUA_RUNC_INTERCEPTION" environment variable set to 0 in order to use User Access Control Policies. |
 
 _Host Protection settings_
-Setting | Explanation
------------- | -------------
-Runtime Controls | Selecting this option will apply host-related Container Runtime Policy controls: Forensics (Host), Whitelisted OS Users and Groups, and Blacklisted OS Users and Groups.
+| Setting | Explanation |
+| ------------ | ------------- |
+| Runtime Controls | Selecting this option will apply host-related Container Runtime Policy controls: Forensics (Host), Whitelisted OS Users and Groups, and Blacklisted OS Users and Groups. |
 
 _Advanced settings_
-Setting | Explanation
------------- | -------------
-Host Images Discovery | Selecting this option will allow Enforcers to discover local host images. The images will be listed under Images → HOST IMAGES, as well as under Hosts, in the Images tabs of given hosts.
+| Setting | Explanation |
+| ------------ | ------------- |
+| Host Images Discovery | Selecting this option will allow Enforcers to discover local host images. The images will be listed under Images → HOST IMAGES, as well as under Hosts, in the Images tabs of given hosts. |
 
 4. Click **Create Group**. You should see a new screen titled **Enforcers > Create new group**.
 
@@ -75,8 +75,8 @@ Host Images Discovery | Selecting this option will allow Enforcers to discover l
 ```
 bosh -e <BOSH_ENV> -n upload-release aqua-enforcer-release.tgz
 ```
-
-3. Create the `addon.yaml` deployment file by first copying the text below to a file called `addon.yaml`.
+3. Create the `addon.yaml` deployment file by first copying the text below to a file called `addon.yaml`. 
+  
 ```
 name: aqua-enforcer
 
@@ -107,7 +107,6 @@ releases:
 - name: aqua-enforcer
   version: 4.2.0
 ```
-
 4. Update this file by substituting the following with parameters specific to your environment:
   * `<AQUA_ENFORCER_TOKEN>`: Your Aqua Enforcer installation token. The value is available in Aqua UI > Enforcers > {PAS Enforcer Group} > Edit Group.
   * `<AQUA_SERVER>`: IP address of the Aquasec Job. you can find it by navigating to Ops Manager > Installation Dashboard > Aqua Security for PCF → Status. Use the IP address for the Aquasec job.
