@@ -19,52 +19,134 @@ All Enforcers deployed with the following commands will have the same configurat
 2. Click **Add Enforcer Group**.
 3. On the **Enforcers > Create new group** screen that appears, fill in these settings: 
 
-_Basic parameters_
-| Parameter | Description |
-| ------------ | ------------- |
-| Enforcer Type | Select Aqua Enforcer |
-| Group Name | Enter the name for the Enforcer Group; this name will appear in the list of Enforcer groups |
-| OS Type | Select the OS type for the host |
-| Orchestrator | Pivotal Application Service (PAS) |
-| Service Account | (do not specify this) |
-| Container Runtime | Select the container runtime environment from the drop-down list
-| Project | (do not specify this) |
-| Logical Name (optional) | A logical name for the Enforcer image; this can be any text string |
-| Aqua Gateways | Select the Aqua Gateway(s) that the Enforcer will use to communicate with the Aqua Server. At this point, there will be only one Gateway. |
-| Installation Token | Leave this field blank; a value will be generated automatically, and used in the DaemonSet |
-| Description (optional) | A description for the DaemonSet YAML command |
+**Basic parameters**
 
-_Security settings_
-| Setting | Explanation |
-| ------------ | ------------- |
-| Enforcement Mode | Select **Enforcement** for the Enforcer to enforce Runtime Policies on containers on this host. Select **Audit Only** if you do not want the Enforcer to enforce Runtime Policies. In Audit Only mode, the Enforcer will add audit entries for any Runtime Policy violations. |
-| Allowed Aqua Labels | Select labels that must be assigned to images in order for the images to be permitted to run on the host; if blank, an image with any (or no) label will be permitted. |
-| Allowed Registries | Select registries from which images can be pulled, to run as containers on the host; if blank, all registries are permitted. |
+<table class="nice">
+    <th>Parameter</th>
+    <th>Description</th>
+    <tr>
+        <td>Enforcer Type</td>
+        <td>Select Aqua Enforcer</td>
+    </tr>
+    <tr>
+        <td>Group Name</td>
+        <td>Enter the name for the Enforcer Group; this name will appear in the list of Enforcer groups</td>
+    </tr>
+    <tr>
+        <td>OS Type</td>
+        <td>Select the OS type for the host</td>
+    </tr>
+    <tr>
+        <td>Orchestrator</td>
+        <td>Pivotal Application Service (PAS)</td>
+    </tr>
+    <tr>
+        <td>Service Account</td>
+        <td>(do not specify this)</td>
+    </tr>
+    <tr>
+        <td>Container Runtime</td>
+        <td>Select the container runtime environment from the drop-down list</td>
+    </tr>
+    <tr>
+        <td>Project</td>
+        <td>(do not specify this)</td>
+    </tr>
+    <tr>
+        <td>Logical Name (optional)</td>
+        <td>A logical name for the Enforcer image; this can be any text string</td>
+    </tr>
+    <tr>
+        <td>Aqua Gateways</td>
+        <td>Select the Aqua Gateway(s) that the Enforcer will use to communicate with the Aqua Server. At this point, there will be only one Gateway.</td>
+    </tr>
+    <tr>
+        <td>Installation Token</td>
+        <td>Leave this field blank; a value will be generated automatically, and used in the DaemonSet</td>
+    </tr>
+    <tr>
+        <td>Description (optional)</td>
+        <td>A description for the DaemonSet YAML command</td>
+    </tr>
+</table>
 
-_Auditing settings_
-| Setting | Explanation
------------- | ------------- |
-| Audit host successful login events | If selected, successful host logins will generate Audit events. |
-| Audit host failed login events | If selected, failed host logins will generate Audit events. |
+**Security settings**
+<table class="nice">
+    <th>Setting</th>
+    <th>Explanation</th>
+    <tr>
+        <td>Enforcement Mode</td>
+        <td>Select **Enforcement** for the Enforcer to enforce Runtime Policies on containers on this host. Select **Audit Only** if you do not want the Enforcer to enforce Runtime Policies. In Audit Only mode, the Enforcer will add audit entries for any Runtime Policy violations.</td>
+    </tr>
+    <tr>
+        <td>Allowed Aqua Labels</td>
+        <td>Select labels that must be assigned to images in order for the images to be permitted to run on the host; if blank, an image with any (or no) label will be permitted.</td>
+    </tr>
+    <tr>
+        <td>Allowed Registries</td>
+        <td>Select registries from which images can be pulled, to run as containers on the host; if blank, all registries are permitted.</td>
+    </tr>
+</table>
 
-_Container Protection settings_
-| Setting | Explanation |
-| ------------ | ------------- |
-| Image Assurance | Selecting this option will prevent containers from running based on Container Runtime Policy controls such as "Block Unregistered Images" and "Block Non-compliant Images", or the "Blacklisted Images" control under the Default Image Assurance Policy. |
-| Runtime Activity | Selecting this option will apply Container Runtime Policies, Image Profiles, and Service membership rules. |
-| System Call Monitoring | This option is available only if Runtime Activity is selected. Selecting this option will allow profiling and monitoring system calls made by running containers. |
-| Container Firewall | Selecting this option will apply Container Firewall Policies and allow recording network maps for services. |
-| User Access Control | Selecting this option will apply User Access Control Policies. Enforcers must be deployed with the "AQUA_RUNC_INTERCEPTION" environment variable set to 0 in order to use User Access Control Policies. |
+**Auditing settings**
+<table class="nice">
+    <th>Setting</th>
+    <th>Explanation</th>
+    <tr>
+        <td>Audit host successful login events</td>
+        <td>If selected, successful host logins will generate Audit events.</td>
+    </tr>
+    <tr>
+        <td>Audit host failed login events</td>
+        <td>If selected, failed host logins will generate Audit events.</td>
+    </tr>
+</table>
 
-_Host Protection settings_
-| Setting | Explanation |
-| ------------ | ------------- |
-| Runtime Controls | Selecting this option will apply host-related Container Runtime Policy controls: Forensics (Host), Whitelisted OS Users and Groups, and Blacklisted OS Users and Groups. |
+**Container Protection settings**
+<table class="nice">
+    <th>Setting</th>
+    <th>Explanation</th>
+    <tr>
+        <td>Image Assurance</td>
+        <td>Selecting this option will prevent containers from running based on Container Runtime Policy controls such as "Block Unregistered Images" and "Block Non-compliant Images", or the "Blacklisted Images" control under the Default Image Assurance Policy.</td>
+    </tr>
+    <tr>
+        <td>Runtime Activity</td>
+        <td>Selecting this option will apply Container Runtime Policies, Image Profiles, and Service membership rules.</td>
+    </tr>
+    <tr>
+        <td>System Call Monitoring</td>
+        <td>This option is available only if Runtime Activity is selected. Selecting this option will allow profiling and monitoring system calls made by running containers.</td>
+    </tr>
+    <tr>
+        <td>Container Firewall</td>
+        <td>Selecting this option will apply Container Firewall Policies and allow recording network maps for services.</td>
+    </tr>
+    <tr>
+        <td>User Access Control</td>
+        <td>Selecting this option will apply User Access Control Policies. Enforcers must be deployed with the "AQUA_RUNC_INTERCEPTION" environment variable set to 0 in order to use User Access Control Policies.</td>
+    </tr>
+</table>
 
-_Advanced settings_
-| Setting | Explanation |
-| ------------ | ------------- |
-| Host Images Discovery | Selecting this option will allow Enforcers to discover local host images. The images will be listed under Images → HOST IMAGES, as well as under Hosts, in the Images tabs of given hosts. |
+**Host Protection settings**
+<table class="nice">
+    <th>Setting</th>
+    <th>Explanation</th>
+    <tr>
+        <td>Runtime Controls</td>
+        <td>Selecting this option will apply host-related Container Runtime Policy controls: Forensics (Host), Whitelisted OS Users and Groups, and Blacklisted OS Users and Groups.</td>
+    </tr>
+</table>
+
+**Advanced settings**
+<table class="nice">
+    <th>Setting</th>
+    <th>Explanation</th>
+    <tr>
+        <td>Host Images Discovery</td>
+        <td>Selecting this option will allow Enforcers to discover local host images. The images will be listed under Images → HOST IMAGES, as well as under Hosts, in the Images tabs of given hosts.</td>
+    </tr>
+</table>
 
 4. Click **Create Group**. You should see a new screen titled **Enforcers > Create new group**. The message "Enforcers group <group-name> successfully created" will be displayed briefly in the upper-right corner of the screen.
 5. Follow the instructions displayed on the screen:
