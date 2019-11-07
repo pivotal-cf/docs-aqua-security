@@ -7,13 +7,14 @@ These are release notes for Aqua Security for Pivotal Platform.
 
 ##<a id="ver"></a> v4.2.19283
 
-**Release Date:** Oct 14, 2019
+**Release Date:** October 14, 2019
 
-*The following error was shown from Aqua scan when running “cf push” command - “jq index error”
-*Cannot not scan applications if Aqua Scanner was setup with non-admin account.
-*Registered application are now as registered in the Aqua UI -> Workloads screen.
-*Enforcer is not restarting when running “monit stop” and “monit start”.
-*Disk space is filling with log messages from Aqua Enforcer.
+* Updating Aqua Security components to version 4.2.19283
+* Fixed an error that was shown from Aqua scan when running “cf push” command - “jq index error”
+* You can now deploy Aqua Scanner with non-admin account.
+* Fixed an issue where applications where not shown in the Aqua UI -> Workloads screen.
+* Enforcer is now controlled through "monit". When running “monit stop” and “monit start” the Enforcer will stop and start.
+* Fixed issue with disk space filling due to with log messages from Aqua Enforcer.
 
 ##<a id="ver"></a> v4.2.0
 
