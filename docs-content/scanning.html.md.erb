@@ -7,7 +7,7 @@ owner: Partners
 
 This section describes Aqua scanning of images for vulnerabilities, sensitive data, and malware.
 
-Aqua provides security analysis for Pivotal Platform applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
+Aqua provides security analysis for VMware Tanzu applications at build time, Docker images at build time, and Docker images in various storage repositories. The platform then assigns access control policies on these images when used in your environments.
 Aqua scans images for common vulnerabilities and exposures (CVEs) listed on the NVD website, a U.S. government repository of standards-based vulnerability management data as well as data from other industry sources which is curated by Aqua Security research staff.
 It is crucial to scan images and repositories for known vulnerabilities that could impact the system information assurance and security leading to security risks. Scanning an image for vulnerabilities reduces these incidents and makes you more aware of the known and defined vulnerable images in the system.
 
@@ -51,22 +51,22 @@ After the scan is completed, you can view the scan results. Do the following:
 
 ## <a id="decorator"></a>Aqua Decorator Buildpack
 
-Build-time vulnerabilty scanning of Pivotal Platform apps is achieved through the `aquasec-decorator` buildpack, which is installed by an errand upon tile installation.
+Build-time vulnerabilty scanning of VMware Tanzu apps is achieved through the `aquasec-decorator` buildpack, which is installed by an errand upon tile installation.
 The decorator will be triggered if the `AQUA_SERVER_URL` envrionment variable is set for an app during staging.
-To function properly, the Aqua microscanner invoked by the the decorator will require you to set an `AQUA_USERNAME` and `AQUA_PASSWORD`.
+To function properly, the Aqua microscanner invoked by the the decorator will require you to set an `AQUA_USERNAME` and `AQUA_TASSWORD`.
 Aqua recommends implementing a `staging-environment-variable-group` variable so as to not impact developers current environment settings.
 In the case of a `cf push` that fails to pass the assurance policy, the JSON output of the scanner will be sent to `stdout`, giving the developer or CI a direct feedback loop. This empowers developers directly.
 
 ### <a id="registry-naming"></a> Blobstore (Registry) Naming Conventions
 
-There are two ways of mapping a Pivotal Platform application to an Aqua registry entry:
+There are two ways of mapping a VMware Tanzu application to an Aqua registry entry:
 
 * Specifying the registry name using the `AQUA_REGISTRY` environment variable.
-* Dynamically generating the registry name based on the Pivotal Platform space name and first eight characters of the space guid.
+* Dynamically generating the registry name based on the VMware Tanzu space name and first eight characters of the space guid.
 
 ### <a id="image-naming"></a> Image Naming Convention
 
-Pivotal Platform application scan results are registered within a registry using the app name and the first eight characters of the application version.
+VMware Tanzu application scan results are registered within a registry using the app name and the first eight characters of the application version.
 
 
 ## <a id="registry-creation"></a>Aqua Registry Creation
@@ -87,24 +87,24 @@ You can create a registry of the Cloud Foundry Registry type through the Aqua AP
 
 <pre class="terminal">
 $ export AQUA_USERNAME=pcf-scanner
-$ export AQUA_PASSWORD=password set in console
+$ export AQUA_TASSWORD=password set in console
 $ export AQUA_SERVER_URL=http://aquasec.[system_domain]
 $ export AQUA_REGISTRY=example
 $ data=$(jq -n -c --arg registry "${AQUA_REGISTRY}" '{name: $registry, type: "API"}')
-$ curl -s -k -X POST -d "${data}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_PASSWORD}" \
+$ curl -s -k -X POST -d "${data}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_TASSWORD}" \
     ${AQUA_SERVER_URL%/}/api/v1/registries
 </pre>
 
 ### <a id="seed-registry"></a>Pre-Seed Registries
 
-You can create a registry of the Cloud Foundry Registry type for each Pivotal Platform space through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html), and [cf CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed. You must log in as a Pivotal Platform admin with `cf login`.
+You can create a registry of the Cloud Foundry Registry type for each VMware Tanzu space through the Aqua API by running the commands below. Make sure you have [jq](https://stedolan.github.io/jq/download/), [curl](https://curl.haxx.se/docs/install.html), and [cf CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed. You must log in as a VMware Tanzu admin with `cf login`.
 
 <pre class="terminal">
 $ export AQUA_USERNAME=administrator
-$ export AQUA_PASSWORD=# password from credentials tab in opsmanager
+$ export AQUA_TASSWORD=# password from credentials tab in opsmanager
 $ export AQUA_SERVER_URL=http://aquasec.[system_domain]
 $ for registry in $(cf curl /v2/spaces | jq -c '.resources[] | {name: "\(.entity.name)-\(.metadata.guid | split("-") | .[0])", type: "API"}'); do
-    curl -s -k -X POST -d "${registry}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_PASSWORD}" ${AQUA_SERVER_URL%/}/api/v1/registries
+    curl -s -k -X POST -d "${registry}" -H "Content-Type: application/json" -u "${AQUA_USERNAME}:${AQUA_TASSWORD}" ${AQUA_SERVER_URL%/}/api/v1/registries
   done
 </pre>
 
@@ -115,23 +115,23 @@ set-staging-environment-variable-groupset-staging-environment-variable-group
 You can enable security scanning globally by using the staging environment variable group.
 All apps will use the same Aqua username and password. Environment variables set through a staging envrionment variable group will be visible to all app developers through `cf env {APP-NAME}`.
 
-Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for all Pivotal Platform apps during staging by running the commands below. Additionally, if the environment uses self-signed certificates for the Aqua Server, you must set `AQUA_VERIFY_CERTS="0"`. The scanning buildpack has an option to display the scan result URL in the console. Use `AQUA_SHOW_URL="1"` to enable this feature. You must be logged in as a Pivotal Platform admin with `cf login` to set these variables globally.
+Set the `AQUA_USERNAME`, `AQUA_TASSWORD`, and `AQUA_SERVER_URL` environment variables for all VMware Tanzu apps during staging by running the commands below. Additionally, if the environment uses self-signed certificates for the Aqua Server, you must set `AQUA_VERIFY_CERTS="0"`. The scanning buildpack has an option to display the scan result URL in the console. Use `AQUA_SHOW_URL="1"` to enable this feature. You must be logged in as a VMware Tanzu admin with `cf login` to set these variables globally.
 
 <pre class="terminal">
-$ cf set-staging-environment-variable-group '{"AQUA_REGISTRY":"PIE23","AQUA_USERNAME":"pcf-scanner","AQUA_PASSWORD":"abc12345","AQUA_SERVER_URL":"http://2.3.4.5:8080"}'
+$ cf set-staging-environment-variable-group '{"AQUA_REGISTRY":"PIE23","AQUA_USERNAME":"pcf-scanner","AQUA_TASSWORD":"abc12345","AQUA_SERVER_URL":"http://2.3.4.5:8080"}'
 </pre>
 
 You can also do this with a script:
 
 <pre class="terminal">
 $ export AQUA_USERNAME=pcf-scanner
-$ export AQUA_PASSWORD=# password from Aqua console
+$ export AQUA_TASSWORD=# password from Aqua console
 $ export AQUA_SERVER_URL=http://aquasec.[system_domain]
 
 $ cf set-staging-environment-variable-group \
   $(cf curl /v2/config/environment_variable_groups/staging | \
-    jq -c --arg user "$AQUA_USERNAME" --arg pass "$AQUA_PASSWORD" --arg url "$AQUA_SERVER_URL" \
-    '.AQUA_USERNAME = $user | .AQUA_PASSWORD = $pass | .AQUA_SERVER_URL = $url')
+    jq -c --arg user "$AQUA_USERNAME" --arg pass "$AQUA_TASSWORD" --arg url "$AQUA_SERVER_URL" \
+    '.AQUA_USERNAME = $user | .AQUA_TASSWORD = $pass | .AQUA_SERVER_URL = $url')
 </pre>
 
 To verify that the setting was assigned properly, run the following command:
@@ -142,11 +142,11 @@ $ cf staging-environment-variable-group
 
 ## <a id="app-env"></a> Enable Aqua Decorator for a Single App
 
-Set the `AQUA_USERNAME`, `AQUA_PASSWORD`, and `AQUA_SERVER_URL` environment variables for a single Pivotal Platform app by running the commands below. Afterward, the app will be restaged. You must log in as a developer with `cf login`.
+Set the `AQUA_USERNAME`, `AQUA_TASSWORD`, and `AQUA_SERVER_URL` environment variables for a single VMware Tanzu app by running the commands below. Afterward, the app will be restaged. You must log in as a developer with `cf login`.
 
 <pre class="terminal">
 $ cf set-env {APP_NAME} AQUA_USERNAME administrator
-$ cf set-env {APP_NAME} AQUA_PASSWORD {AQUA_PASSWORD}
+$ cf set-env {APP_NAME} AQUA_TASSWORD {AQUA_TASSWORD}
 $ cf set-env {APP_NAME} AQUA_SERVER_URL http://aquasec.[system_domain]
 $ cf set-env {APP_NAME} AQUA_REGISTRY example # optional
 $ cf restage {APP_NAME}

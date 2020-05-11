@@ -7,7 +7,7 @@ owner: Partners
 
 This section describes the deployment of an Aqua Enforcer with BOSH on all Diego cells in your CF cluster nodes by using a deployment add-on, which automatically deploys a single Aqua Enforcer container on each Diego cell in your cluster.
 
-First, you create a new Enforcer group in the Aqua Server. An Enforcer group is a set of Aqua Enforcers with the same configuration. You need to create one that will work with Pivotal Application Service (PAS); you cannot use the default Enforcer group for this.
+First, you create a new Enforcer group in the Aqua Server. An Enforcer group is a set of Aqua Enforcers with the same configuration. You need to create one that will work with Tanzu Application Service (TAS); you cannot use the default Enforcer group for this.
 
 A byproduct of the Enforcer group creation is the add-on required for BOSH. Aqua does not automatically deploy the Enforcer on Diego cells; you do this by using BOSH commands.
 
@@ -38,7 +38,7 @@ All Enforcers deployed with the following commands will have the same configurat
     </tr>
     <tr>
         <td>Orchestrator</td>
-        <td>Pivotal Application Service (PAS)</td>
+        <td>Tanzu Application Service (TAS)</td>
     </tr>
     <tr>
         <td>Service Account</td>
